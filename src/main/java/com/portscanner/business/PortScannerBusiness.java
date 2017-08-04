@@ -10,13 +10,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PortScannerBusiness {
 	
-	public int getAmountOfOpenPorts() throws InterruptedException, ExecutionException {
+	public int getAmountOfOpenPorts(String ip) throws InterruptedException, ExecutionException {
 		final ExecutorService executorService = Executors.newFixedThreadPool(20);
 		
-		// localhost
-		final String ip = "127.0.0.1";
 		final int timeout = 200;
 		final List<Future<Boolean>> futures = new ArrayList<>();
 		

@@ -6,6 +6,6 @@ import com.portscanner.dto.OpenPortDTO;
 
 public interface PortScannerBusiness {
 	
-	public OpenPortDTO getOpenPorts(String ip) throws InterruptedException, ExecutionException;
+	OpenPortDTO getOpenPorts(String ip) throws InterruptedException, ExecutionException;
 	
 }

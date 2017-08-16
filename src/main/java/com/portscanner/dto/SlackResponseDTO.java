@@ -7,6 +7,10 @@ public class SlackResponseDTO {
 	private String text;
 	private List<String> attachments;
 	
+	public SlackResponseDTO() {
+		super();
+	}
+
 	public SlackResponseDTO(String text, List<String> attachments) {
 		super();
 		this.text = text;

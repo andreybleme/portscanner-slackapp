@@ -2,10 +2,11 @@ package com.portscanner.business;
 
 import java.util.concurrent.ExecutionException;
 
-import com.portscanner.dto.OpenPortDTO;
+import com.portscanner.dto.SlackRequestDTO;
+import com.portscanner.dto.SlackResponseDTO;
 
 public interface PortScannerBusiness {
 	
-	OpenPortDTO getOpenPorts(String ip) throws InterruptedException, ExecutionException;
+	SlackResponseDTO getOpenPorts(SlackRequestDTO slackRequestDTO) throws InterruptedException, ExecutionException;
 	
 }

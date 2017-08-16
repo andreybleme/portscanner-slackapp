@@ -12,7 +12,8 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Component;
 
-import com.portscanner.dto.OpenPortDTO;
+import com.portscanner.dto.SlackRequestDTO;
+import com.portscanner.dto.SlackResponseDTO;
 
 @Component
 public class PortScannerBusinessImpl implements PortScannerBusiness {
@@ -20,8 +21,9 @@ public class PortScannerBusinessImpl implements PortScannerBusiness {
 	private final ExecutorService executorService = Executors.newFixedThreadPool(20);
 	private static final int TIMEOUT = 200;
 	
-	public OpenPortDTO getOpenPorts(String ip) throws InterruptedException, ExecutionException {
+	public SlackResponseDTO getOpenPorts(SlackRequestDTO slackRequestDTO) throws InterruptedException, ExecutionException {
 		final List<Future<Boolean>> futures = new ArrayList<>();
+		String ip = slackRequestDTO.getText();
 		
 		for (int porta = 1; porta <= 65535; porta++) {
 			futures.add(isPortOpen(executorService, ip, porta, TIMEOUT));
@@ -41,7 +43,9 @@ public class PortScannerBusinessImpl implements PortScannerBusiness {
 				amountOfOpenPorts++;	
 			}
 		}
-		return new OpenPortDTO(amountOfOpenPorts, openPorts);
+		
+		
+		return new SlackResponseDTO(buildSlackResponseTextMessage(amountOfOpenPorts, openPorts, ip), null);
 	}
 
 	private Future<Boolean> isPortOpen(ExecutorService executorService, String ip, int port, int timeout) {
@@ -59,5 +63,15 @@ public class PortScannerBusinessImpl implements PortScannerBusiness {
 				}
 			}
 		});
+	}
+	
+	private String buildSlackResponseTextMessage(int amountOfOpenPorts, List<String> openPorts, String ip) {
+		StringBuilder message = new StringBuilder(amountOfOpenPorts + " available on " + ip + ".");
+		
+		if (amountOfOpenPorts > 0) {
+			openPorts.forEach(
+					port -> message.append("\n - " + port));
+		}
+		return message.toString();
 	}
 }

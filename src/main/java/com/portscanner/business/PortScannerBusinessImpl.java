@@ -29,8 +29,6 @@ public class PortScannerBusinessImpl implements PortScannerBusiness {
 			futures.add(isPortOpen(executorService, ip, porta, TIMEOUT));
 		}
 		
-		executorService.shutdown();
-		
 		int amountOfOpenPorts = 0;
 		int openPort = 0;
 		List<String> openPorts = new ArrayList<>();

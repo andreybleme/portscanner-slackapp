@@ -3,7 +3,6 @@ package com.portscanner.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,7 @@ public class HealthCheckController {
 	private SlackVerificationTokenBusiness slackVerificationTokenBusiness;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<SlackResponseDTO>  healthCheck(@RequestBody SlackRequestDTO slackRequestDTO) {
+	public ResponseEntity<SlackResponseDTO>  healthCheck(SlackRequestDTO slackRequestDTO) {
 		SlackResponseDTO slackResponseDTO = new SlackResponseDTO();
 		
 		if (slackRequestDTO.getToken() == null || !slackVerificationTokenBusiness.isRequestComingFromSlack(slackRequestDTO.getToken())) {

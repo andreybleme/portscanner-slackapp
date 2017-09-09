@@ -64,11 +64,11 @@ public class PortScannerBusinessImpl implements PortScannerBusiness {
 	}
 	
 	private String buildSlackResponseTextMessage(int amountOfOpenPorts, List<String> openPorts, String ip) {
-		StringBuilder message = new StringBuilder(amountOfOpenPorts + " available on " + ip + ".");
+		StringBuilder message = new StringBuilder("There is " + amountOfOpenPorts + " available ports on " + ip + ":");
 		
 		if (amountOfOpenPorts > 0) {
 			openPorts.forEach(
-					port -> message.append("\n - " + port));
+					port -> message.append("\n " + ip + ":" + port));
 		}
 		return message.toString();
 	}
